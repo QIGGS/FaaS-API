@@ -1,9 +1,9 @@
 {
-  "MongoConnectionString": "mongodb://admin:admin@helloworld-shard-00-00-4b3ak.mongodb.net:27017,helloworld-shard-00-01-4b3ak.mongodb.net:27017,helloworld-shard-00-02-4b3ak.mongodb.net:27017/test?ssl=true&replicaSet=HelloWorld-shard-0&authSource=admin&retryWrites=true",
-  "MongoDatabase": "QIGGS",
-  "MongoDeviceCollection": "devices",
-  "MongoLogCollection": "logs",
-  "MongoMeasurementCollection": "measurements",
+  "MongoConnectionString": "",
+  "MongoDatabase": "",
+  "MongoDeviceCollection": "",
+  "MongoLogCollection": "",
+  "MongoMeasurementCollection": "",
 
   "Index Description": "TimeSpan parameters for Measurement collection index",
   "ExpireAfterDays": 1,
