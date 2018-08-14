@@ -8,8 +8,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Compiling
 * Azure Functions runtime 1.x
-* [NuGet]Microsoft.NET.Sdk.Functions
-* [NuGet]MongoDB.Driver
+* [NuGet]Microsoft.NET.Sdk.Functions (1.0.14)
+* [NuGet]MongoDB.Driver (2.7.0)
 
 ## Built With
 * [Microsoft Visual Studio 2017](https://visualstudio.microsoft.com/) - The IDE used
