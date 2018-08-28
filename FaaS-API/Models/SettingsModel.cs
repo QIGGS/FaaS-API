@@ -33,7 +33,7 @@ namespace FaaS.Models
                 new IgnoreIfDefaultConvention(true),
                 new IgnoreExtraElementsConvention(true)
             },
-            t => t == typeof(SettingsModel));
+            t => true);
 
 
         }
