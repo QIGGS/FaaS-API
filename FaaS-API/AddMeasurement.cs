@@ -38,10 +38,12 @@ namespace FaaS
             int dCount = measurementModel.Count;
 
             if (dCount == 0)
+            {
                 return req.CreateResponse(HttpStatusCode.BadRequest, new
                 {
                     error = $"Imported {dCount} {settingsModel.MongoMeasurementCollection}"
                 });
+            }
 
             measurementModel.ForEach(async device => await measurementCollection.InsertOneAsync(device));
 

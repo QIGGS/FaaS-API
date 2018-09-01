@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace FaaS
 {
-
     public static class AddLog
     {
         [FunctionName("AddLog")]
@@ -49,7 +48,6 @@ namespace FaaS
                 logCollection = database.GetCollection<LogModel>(settingsModel.MongoLogCollection);
             }
 
-
             int dCount = logModel.Count;
 
             if (dCount == 0)
@@ -58,17 +56,13 @@ namespace FaaS
                     error = $"Imported {dCount} {settingsModel.MongoLogCollection}"
                 });
 
-
             logModel.ForEach(async logs => await logCollection.InsertOneAsync(logs));
 
             return req.CreateResponse(HttpStatusCode.OK, new
             {
                 success = $"Imported {dCount} {settingsModel.MongoLogCollection}"
             });
-
-
         }
-
     }
 }
 

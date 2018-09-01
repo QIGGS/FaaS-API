@@ -36,14 +36,12 @@ namespace FaaS
 
             var logs = new List<BsonDocument>();
 
-
             await logCollection.Find(filter).ForEachAsync(dLog =>
             {
                 dLog["_id"] = dLog["_id"].ToString();
                 log.Info(dLog.ToString());
                 logs.Add(dLog);
             });
-
 
             if (logs.Count != 0)
             {

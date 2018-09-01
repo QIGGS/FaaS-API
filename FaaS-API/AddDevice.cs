@@ -13,7 +13,6 @@ namespace FaaS
 {
     public static class AddDevice
     {
-
         [FunctionName("AddDevice")]
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log, ExecutionContext context)
         {
@@ -22,8 +21,6 @@ namespace FaaS
 
             var settingsPath = Path.Combine(context.FunctionAppDirectory, "settings.json");
             var settingsModel = BsonSerializer.Deserialize<SettingsModel>(File.ReadAllText(settingsPath));
-
-            log.Info(settingsModel.ToJson());
 
             var deviceModel = BsonSerializer.Deserialize<DeviceModel>(await req.Content.ReadAsStringAsync());
 

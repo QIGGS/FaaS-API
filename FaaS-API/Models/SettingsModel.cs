@@ -34,8 +34,6 @@ namespace FaaS.Models
                 new IgnoreExtraElementsConvention(true)
             },
             t => true);
-
-
         }
     }
 }
