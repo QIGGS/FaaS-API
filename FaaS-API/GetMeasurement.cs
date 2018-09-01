@@ -12,7 +12,6 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace FaaS
 {
     public static class GetMeasurement
@@ -26,14 +25,14 @@ namespace FaaS
             var settingsPath = Path.Combine(context.FunctionAppDirectory, "settings.json");
             var settingsModel = BsonSerializer.Deserialize<SettingsModel>(File.ReadAllText(settingsPath));
 
-            var measurementModel = BsonSerializer.Deserialize<MeasurementModel>(await req.Content.ReadAsStringAsync());
+            var measurementModelGet = BsonSerializer.Deserialize<MeasurementModelGet>(await req.Content.ReadAsStringAsync());
 
             var dbClient = new MongoClient(settingsModel.MongoConnectionString);
             var database = dbClient.GetDatabase(settingsModel.MongoDatabase);
             var measurementCollection = database.GetCollection<BsonDocument>(settingsModel.MongoMeasurementCollection);
 
             var filterBuilder = Builders<BsonDocument>.Filter;
-            var filter = filterBuilder.Gte("timestamp", measurementModel.StartDate) & filterBuilder.Lte("timestamp", measurementModel.EndDate) & filterBuilder.Eq("name", measurementModel.Name);
+            var filter = filterBuilder.Gte("timestamp", measurementModelGet.StartDate) & filterBuilder.Lte("timestamp", measurementModelGet.EndDate) & filterBuilder.Eq("name", measurementModelGet.Name);
 
             var result = new List<BsonDocument>();
 
@@ -45,10 +44,12 @@ namespace FaaS
             });
 
             if (result.Count != 0)
+            {
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(result.ToJson(), Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.ToString())
                 };
+            }
 
             return req.CreateResponse(HttpStatusCode.BadRequest, new
             {

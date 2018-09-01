@@ -22,12 +22,6 @@ namespace FaaS.Models
         [BsonElement("sensor-name")]
         public string SensorName { get; set; }
 
-        [BsonElement("start-date")]
-        public long? StartDate { get; set; }
-
-        [BsonElement("end-date")]
-        public long? EndDate { get; set; }
-
         [BsonElement("last-modified")]
         public DateTime LastModified { get { return DateTime.Now; } }
     }

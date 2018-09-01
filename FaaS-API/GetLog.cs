@@ -25,14 +25,14 @@ namespace FaaS
             var settingsPath = Path.Combine(context.FunctionAppDirectory, "settings.json");
             var settingsModel = BsonSerializer.Deserialize<SettingsModel>(File.ReadAllText(settingsPath));
 
-            var logModel = BsonSerializer.Deserialize<LogModel>(await req.Content.ReadAsStringAsync());
+            var LogModelGet = BsonSerializer.Deserialize<LogModelGet>(await req.Content.ReadAsStringAsync());
 
             var dbClient = new MongoClient(settingsModel.MongoConnectionString);
             var database = dbClient.GetDatabase(settingsModel.MongoDatabase);
             var logCollection = database.GetCollection<BsonDocument>(settingsModel.MongoLogCollection);
 
             var filterBuilder = Builders<BsonDocument>.Filter;
-            var filter = filterBuilder.Gte("timestamp", logModel.StartDate) & filterBuilder.Lte("timestamp", logModel.EndDate) & filterBuilder.Eq("name", logModel.Name);
+            var filter = filterBuilder.Gte("timestamp", LogModelGet.StartDate) & filterBuilder.Lte("timestamp", LogModelGet.EndDate) & filterBuilder.Eq("name", LogModelGet.Name);
 
             var logs = new List<BsonDocument>();
 
@@ -46,16 +46,17 @@ namespace FaaS
 
 
             if (logs.Count != 0)
+            {
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(logs.ToJson(), Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.ToString())
                 };
+            }
 
             return req.CreateResponse(HttpStatusCode.BadRequest, new
             {
                 error = $"No logs"
             });
         }
-
     }
 }
